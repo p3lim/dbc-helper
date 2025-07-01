@@ -55,6 +55,9 @@ on:
     - cron: 0 12 * * *
   workflow_dispatch:
 
+permissions:
+  pull-requests: write
+
 jobs:
   run:
     runs-on: ubuntu-latest
