@@ -18,7 +18,7 @@ elif [[ "${INPUT_FLAVOR,,}" =~ (classic_era|vanilla) ]]; then
   product='wow_classic_era'
 elif [[ "${INPUT_FLAVOR,,}" = 'classic' ]]; then
   product='wow_classic'
-else
+elif test "$INPUT_FLAVOR" != ''; then
   echo "invalid flavor '$INPUT_FLAVOR', must be one of: retail, mainline, classic, classic_era, vanilla."
   exit 1
 fi
