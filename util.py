@@ -20,14 +20,15 @@ class CSVReader(csv.DictReader):
 def dbc(file):
   # we'll need to avoid collisions
   tempfile.tempdir = os.environ["RUNNER_TEMP"]
-  with tempfile.mkdtemp() as tmp:
-    # cache file to disk
-    url = f'https://wago.tools/db2/{file}/csv?build={os.environ["DBC_BUILD"]}'
-    file = f'{tmp}/{file}.csv'
-    urllib.request.urlretrieve(url, file)
+  tmp = tempfile.mkdtemp()
 
-    # return it as a CSV object
-    return CSVReader(open(file, 'r'))
+  # cache file to disk
+  url = f'https://wago.tools/db2/{file}/csv?build={os.environ["DBC_BUILD"]}'
+  file = f'{tmp}/{file}.csv'
+  urllib.request.urlretrieve(url, file)
+
+  # return it as a CSV object
+  return CSVReader(open(file, 'r'))
 
 
 DEFAULT_TEMPLATE = '''
