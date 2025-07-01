@@ -1,0 +1,7 @@
+resistance name: Physical
+resistance name: Holy
+resistance name: Fire
+resistance name: Nature
+resistance name: Frost
+resistance name: Shadow
+resistance name: Arcane
