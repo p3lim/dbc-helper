@@ -2,8 +2,6 @@
 
 set -e
 
-env
-
 # check inputs
 if test "$INPUT_FILES" = ''; then
   echo 'no files to process'
