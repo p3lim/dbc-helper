@@ -17,6 +17,7 @@ jobs:
 
       - name: Scrape
         uses: p3lim/dbc-helper@master
+        id: scraper
         with:
           flavor: retail
           beta: true
