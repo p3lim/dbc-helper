@@ -5,7 +5,7 @@ It uses DBC/DB2 files in CSV format from [Wago Tools](https://wago.tools/db2) (w
 
 ## Usage
 
-It is intended to be run as a GitHub Action (see below), defining Python script file(s) that generate output.
+It is intended to be run as a GitHub Action (see below), with Python script(s) that generate output.
 
 The action comes with some Python utilities for downloading the CSV file(s) and structuring them.  
 An example use-case can be as follows:
