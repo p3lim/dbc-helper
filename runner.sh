@@ -85,6 +85,9 @@ fi
   echo "build=$latest_build"
 } >> "$GITHUB_OUTPUT"
 
+echo "$GITHUB_OUTPUT"
+cat "$GITHUB_OUTPUT"
+
 # export version for the util
 export DBC_BUILD="$latest_version"
 
