@@ -1,0 +1,20 @@
+name: DBC Helper
+description: Aids scraping DBC files from wago.tools
+branding:
+  icon: tag
+  color: yellow
+inputs:
+  flavor:
+    description: Interface version to default to
+    default: retail
+  beta:
+    description: Include beta versions?
+  ptr:
+    description: Include PTR versions?
+  files:
+    description: Script file and output file pairs
+runs:
+  using: composite
+  steps:
+    - run: bash ${{ github.action_path }}/runner.sh
+      shell: bash
