@@ -8,6 +8,9 @@ if test "$INPUT_FILES" = ''; then
   exit 1
 fi
 
+# strip empty lines
+INPUT_FILES="$(sed '/^[[:space:]]*$/d' <<< "$INPUT_FILES")"
+
 product='wow' # the default
 if [[ "${INPUT_FLAVOR,,}" =~ (retail|mainline) ]]; then
   product='wow'
