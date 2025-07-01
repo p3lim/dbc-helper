@@ -57,6 +57,7 @@ on:
 
 permissions:
   pull-requests: write
+  contents: write
 
 jobs:
   run:
