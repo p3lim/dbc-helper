@@ -100,7 +100,7 @@ while read -r script output; do
 
   # run script async
   echo "Running '$script' > '$output'"
-  python3 "${GITHUB_WORKSPACE}/${script}" > "${GITHUB_WORKSPACE}/${output}"
+  python3 "${GITHUB_WORKSPACE}/${script}" > "${GITHUB_WORKSPACE}/${output}" &
 
   # store script pid
   pids+=($!)
