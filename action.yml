@@ -13,11 +13,22 @@ inputs:
     description: Include PTR versions?
   files:
     description: Script file and output file pairs
+outputs:
+  flavor:
+    description: Flavor from input
+    value: ${{ steps.runner.outputs.flavor }}
+  version:
+    description: Latest game version
+    value: ${{ steps.runner.outputs.version }}
+  build:
+    description: Latest game build
+    value: ${{ steps.runner.outputs.build }}
 runs:
   using: composite
   steps:
     - run: bash ${{ github.action_path }}/runner.sh
       shell: bash
+      id: runner
       env:
         INPUT_FLAVOR: ${{ inputs.flavor }}
         INPUT_BETA: ${{ inputs.beta }}
