@@ -26,8 +26,8 @@ script2: output2
 
 ## GitHub Action
 
-You can use this in a GitHub workflow by referencing `p3lim/dbc-helper@main`.  
-There will probably never be any tags, so if you prefer stability you should consider forking this project.
+You can use this in a GitHub workflow by referencing `p3lim/dbc-helper@master`.  
+There will probably never be any tags, so if you prefer stability you should consider forking this project, or pinning by commit hash.
 
 Options:
 - `flavor` - sets the game version to scrape data from, must be one of:
@@ -63,7 +63,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run scripts
-        uses: p3lim/dbc-helper@main
+        uses: p3lim/dbc-helper@master
         id: scraper
         with:
           flavor: retail # this is the default
