@@ -18,3 +18,8 @@ runs:
   steps:
     - run: bash ${{ github.action_path }}/runner.sh
       shell: bash
+      env:
+        INPUT_FLAVOR: ${{ inputs.flavor }}
+        INPUT_BETA: ${{ inputs.beta }}
+        INPUT_PTR: ${{ inputs.ptr }}
+        INPUT_FILES: ${{ inputs.files }}
