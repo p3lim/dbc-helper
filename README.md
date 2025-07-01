@@ -13,8 +13,8 @@ import util # provided by this action
 
 # output the spell ID of every spell that is considered a shapeshift
 for row in util.dbc('spells'):
-	if row.NameSubtext_lang == 'Shapeshift':
-		print(row.ID)
+  if row.NameSubtext_lang == 'Shapeshift':
+    print(row.ID)
 ```
 
 The mapping of scripts to run and the files they should output to is as follows:
