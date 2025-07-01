@@ -2,6 +2,7 @@
 
 import os
 import csv
+import tempfile
 import urllib.request
 
 from types import SimpleNamespace
@@ -17,13 +18,16 @@ class CSVReader(csv.DictReader):
 
 
 def dbc(file):
-  # cache file to disk
-  url = f'https://wago.tools/db2/{file}/csv?build={os.environ["DBC_BUILD"]}'
-  file = f'{os.environ["RUNNER_TEMP"]}/{file}.csv'
-  urllib.request.urlretrieve(url, file)
+  # we'll need to avoid collisions
+  tempfile.tempdir = os.environ["RUNNER_TEMP"]
+  with tempfile.mkdtemp() as tmp:
+    # cache file to disk
+    url = f'https://wago.tools/db2/{file}/csv?build={os.environ["DBC_BUILD"]}'
+    file = f'{tmp}/{file}.csv'
+    urllib.request.urlretrieve(url, file)
 
-  # return it as a CSV object
-  return CSVReader(open(file, 'r'))
+    # return it as a CSV object
+    return CSVReader(open(file, 'r'))
 
 
 DEFAULT_TEMPLATE = '''
