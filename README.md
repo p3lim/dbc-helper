@@ -1,12 +1,14 @@
 # DBC Helper
 
-This is a tool to make it easier to scrape DBC/DB2 files from World of Warcraft, using provided CSV files from [Wago Tools](https://wago.tools/db2).
+This is a tool to make it easier to scrape DBC/DB2 files from World of Warcraft.  
+It uses DBC/DB2 files in CSV format from [Wago Tools](https://wago.tools/db2) (with permission).
 
 ## Usage
 
 It is intended to be run as a GitHub Action (see below), defining Python script file(s) that generate output.
 
-The action comes with some Python utilities for downloading the CSV file(s) and structuring them. An example use-case can be as follows:
+The action comes with some Python utilities for downloading the CSV file(s) and structuring them.  
+An example use-case can be as follows:
 
 ```python
 import util # provided by this action
@@ -27,7 +29,7 @@ script2: output2
 ## GitHub Action
 
 You can use this in a GitHub workflow by referencing `p3lim/dbc-helper@master`.  
-There will probably never be any tags, so if you prefer stability you should consider forking this project, or pinning by commit hash.
+There will probably never be any tags, so if you prefer stability you should pin by commit hash.
 
 Options:
 - `flavor` - sets the game version to scrape data from, must be one of:
