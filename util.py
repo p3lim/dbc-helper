@@ -18,6 +18,9 @@ class CSVReader(csv.DictReader):
 
 
 def dbc(file):
+  # it would be highly preferable if we just had access to all of the csv files in a repo
+  # just because of this collision crap, also downloading can be slow
+
   # we'll need to avoid collisions
   tempfile.tempdir = os.environ["RUNNER_TEMP"]
   tmp = tempfile.mkdtemp()
