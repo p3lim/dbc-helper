@@ -50,14 +50,7 @@ if [ -n "$INPUT_PTR" ]; then
       latest_version="$version"
       latest_build="$build"
     fi
-  elif [ "$product" = 'wow_classic_era' ]; then
-    version="$(get_version "${product}_ptr")"
-    build="${version##*.}"
-    if ((build > latest_build)); then
-      latest_version="$version"
-      latest_build="$build"
-    fi
-  elif [ "$product" = 'wow_classic' ]; then
+  else
     version="$(get_version "${product}_ptr")"
     build="${version##*.}"
     if ((build > latest_build)); then
