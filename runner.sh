@@ -82,7 +82,7 @@ fi
 export DBC_BUILD="$latest_version"
 
 # expose our utility "library"
-export PYTHONPATH="${GITHUB_ACTION_PATH}:${PYTHONPATH}"
+export PYTHONPATH="${GITHUB_ACTION_PATH}/utils:${PYTHONPATH}"
 
 # loop over input mapping
 pids=()
