@@ -36,7 +36,7 @@ latest_version="$(get_version "$product")"
 latest_build="${latest_version##*.}"
 
 # go through ptr and beta versions of the product to check if they have a newer build
-if test "$INPUT_PTR" != 'x'; then
+if [ -n "$INPUT_PTR" ]; then
   if [ "$product" = 'wow' ]; then
     version="$(get_version 'wowt')"
     build="${version##*.}"
@@ -67,7 +67,7 @@ if test "$INPUT_PTR" != 'x'; then
   fi
 fi
 
-if test "$INPUT_BETA" != ''; then
+if [ -n "$INPUT_BETA" ]; then
   if [ "$product" != 'wow_classic_era' ]; then
     version="$(get_version "${product}_beta")"
     build="${version##*.}"
