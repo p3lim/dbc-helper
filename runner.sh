@@ -24,11 +24,11 @@ elif test "$INPUT_FLAVOR" != ''; then
 fi
 
 # download builds
-builds="$(curl -sSL 'https://wago.tools/api/builds/latest')"
+builds="$(curl -sSL 'https://wago.tools/api/builds')"
 
 # shorthand for querying builds
 function get_version {
-  jq -r --arg product "$1" '.[] | select(.product == $product) | .version' <<< "$builds"
+  jq -r --arg product "$1" '.[$product] | first | .version' <<< "$builds"
 }
 
 # get latest version and build number for product
