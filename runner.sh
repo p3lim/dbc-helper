@@ -80,6 +80,7 @@ fi
 
 # export version for the util
 export DBC_BUILD="$latest_version"
+echo "DBC $product $latest_version"
 
 # expose our utility "library"
 export PYTHONPATH="${GITHUB_ACTION_PATH}/utils:${PYTHONPATH}"
