@@ -22,11 +22,11 @@ def dbc(file):
   # just because of this collision crap, also downloading can be slow
 
   # we'll need to avoid collisions
-  tempfile.tempdir = os.environ["RUNNER_TEMP"]
+  tempfile.tempdir = os.environ.get('RUNNER_TEMP', tempfile.gettempdir())
   tmp = tempfile.mkdtemp()
 
   # cache file to disk
-  url = f'https://wago.tools/db2/{file}/csv?build={os.environ["DBC_BUILD"]}'
+  url = f'https://wago.tools/db2/{file}/csv?build={os.environ.get("DBC_BUILD")}'
   file = f'{tmp}/{file}.csv'
   urllib.request.urlretrieve(url, file)
 
