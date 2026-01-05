@@ -7,17 +7,36 @@ import urllib.request
 
 from types import SimpleNamespace
 class CSVReader(csv.DictReader):
+  def __init__(self, file, extra_rows=None, *args, **kwargs):
+    super().__init__(file, *args, **kwargs)
+    self.extra_rows = extra_rows or []
+    self.extra_iterator = None
+
   def __next__(self):
-    row = super().__next__()
-    for key in self.fieldnames:
+    # override iterator to return extra rows once the csv file is exhausted
+    try:
+      row = super().__next__()
+    except StopIteration:
+      if self.extra_iterator is None:
+        self.extra_iterator = iter(self.extra_rows)
       try:
-        row[key] = int(row[key])
-      except:
-        pass
+        row = next(self.extra_iterator)
+      except StopIteration:
+        raise StopIteration
+
+    # try convert number values to integers
+    for key in self.fieldnames:
+      if key in row:
+        try:
+          row[key] = int(row[key])
+        except:
+          pass
+
+    # convert dict to SimpleNamespace so it's nicer to work with
     return SimpleNamespace(**row)
 
 
-def dbc(file):
+def dbc(file, extra_rows=None):
   # it would be highly preferable if we just had access to all of the csv files in a repo
   # just because of this collision crap, also downloading can be slow
 
@@ -31,7 +50,7 @@ def dbc(file):
   urllib.request.urlretrieve(url, file)
 
   # return it as a CSV object
-  return CSVReader(open(file, 'r'))
+  return CSVReader(open(file, 'r'), extra_rows)
 
 
 DEFAULT_TEMPLATE = '''
