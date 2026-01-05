@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import csv
 import tempfile
 import urllib.request
@@ -51,6 +52,11 @@ def dbc(file, extra_rows=None):
 
   # return it as a CSV object
   return CSVReader(open(file, 'r'), extra_rows)
+
+
+def bail(*args, **kwargs):
+  print(*args, file=sys.stderr, **kwargs)
+  sys.exit(1)
 
 
 DEFAULT_TEMPLATE = '''
