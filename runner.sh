@@ -16,10 +16,14 @@ if [[ "${INPUT_FLAVOR,,}" =~ (retail|mainline) ]]; then
   product='wow'
 elif [[ "${INPUT_FLAVOR,,}" =~ (classic_era|vanilla) ]]; then
   product='wow_classic_era'
-elif [[ "${INPUT_FLAVOR,,}" = 'classic' ]]; then
+elif [[ "${INPUT_FLAVOR,,}" =~ (anniversary|tbc) ]]; then
+  product='wow_anniversary'
+elif [[ "${INPUT_FLAVOR,,}" =~ (titan|wrath) ]]; then
+  product='wow_classic_titan'
+elif [[ "${INPUT_FLAVOR,,}" =~ (classic|mists) ]]; then
   product='wow_classic'
 elif test "$INPUT_FLAVOR" != ''; then
-  echo "invalid flavor '$INPUT_FLAVOR', must be one of: retail, mainline, classic, classic_era, vanilla."
+  echo "invalid flavor '$INPUT_FLAVOR'"
   exit 1
 fi
 
