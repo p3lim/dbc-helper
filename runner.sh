@@ -32,7 +32,9 @@ builds="$(curl -sSL 'https://wago.tools/api/builds')"
 
 # shorthand for querying builds
 function get_version {
-  jq -r --arg product "$1" '.[$product] | sort_by(.version | split(".") | map(tonumber)) | last | .version' <<< "$builds"
+  if jq -e -r --arg product "$1" '.[$product]' <<< "$builds" > /dev/null; then
+    jq -r --arg product "$1" '.[$product] | sort_by(.version | split(".") | map(tonumber)) | last | .version' <<< "$builds"
+  fi
 }
 
 # get latest version and build number for product
