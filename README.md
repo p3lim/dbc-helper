@@ -34,8 +34,10 @@ There will probably never be any tags, so if you prefer stability you should pin
 Options:
 - `flavor` - sets the game version to scrape data from, must be one of:
   - `retail` (aliases: `mainline`)
-  - `classic`
-  - `classic_era` (aliases: `vanilla`)
+  - `mists` (aliases: `classic`)
+  - `wrath` (aliases: `titan`)
+  - `tbc` (aliases: `anniversary`)
+  - `vanilla` (aliases: `classic_era`)
 - `beta` - set to true to prefer beta versions of the game, if they are more recent
 - `ptr` - set to true to prefer ptr versions of the game, if they are more recent
 - `files` - script/output mapping, separated by lines, see example below
@@ -66,13 +68,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run scripts
         uses: p3lim/dbc-helper@master
         id: scraper
         with:
-          flavor: retail # this is the default
+          flavor: retail
           beta: true
           ptr: true
           files: |
@@ -80,7 +82,7 @@ jobs:
             scripts/items.py: data/items.lua
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         # requires permissions, see https://github.com/peter-evans/create-pull-request#workflow-permissions
         with:
           title: Update ${{ steps.scraper.outputs.flavor }} data to ${{ steps.scraper.outputs.version }}
