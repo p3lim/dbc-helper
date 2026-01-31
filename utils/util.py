@@ -36,6 +36,10 @@ class CSVReader(csv.DictReader):
     # convert dict to SimpleNamespace so it's nicer to work with
     return SimpleNamespace(**row)
 
+# let wago track requests
+opener = urllib.request.build_opener()
+opener.addheaders = [('User-agent', 'actions/dbc-helper')]
+urllib.request.install_opener(opener)
 
 def dbc(file, extra_rows=None):
   # it would be highly preferable if we just had access to all of the csv files in a repo
