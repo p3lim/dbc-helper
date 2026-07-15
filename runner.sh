@@ -37,31 +37,28 @@ function get_version {
   fi
 }
 
+function newer_version {
+  printf '%s\n' "$1" "$2" | sort -C -V
+}
+
 # get latest version and build number for product
 latest_version="$(get_version "$product")"
-latest_build="${latest_version##*.}"
 
 # go through ptr and beta versions of the product to check if they have a newer build
 if [ -n "$INPUT_PTR" ]; then
   if [ "$product" = 'wow' ]; then
     version="$(get_version 'wowt')"
-    build="${version##*.}"
-    if ((build > latest_build)); then
+    if newer_version "${version}" "${latest_version}"; then
       latest_version="$version"
-      latest_build="$build"
     fi
     version="$(get_version 'wowxptr')"
-    build="${version##*.}"
-    if ((build > latest_build)); then
+    if newer_version "${version}" "${latest_version}"; then
       latest_version="$version"
-      latest_build="$build"
     fi
   else
     version="$(get_version "${product}_ptr")"
-    build="${version##*.}"
-    if ((build > latest_build)); then
+    if newer_version "${version}" "${latest_version}"; then
       latest_version="$version"
-      latest_build="$build"
     fi
   fi
 fi
@@ -69,10 +66,8 @@ fi
 if [ -n "$INPUT_BETA" ]; then
   if [ "$product" != 'wow_classic_era' ]; then
     version="$(get_version "${product}_beta")"
-    build="${version##*.}"
-    if ((build > latest_build)); then
+    if newer_version "${version}" "${latest_version}"; then
       latest_version="$version"
-      latest_build="$build"
     fi
   fi
 fi
@@ -81,7 +76,7 @@ fi
 {
   echo "flavor=$INPUT_FLAVOR"
   echo "version=$latest_version"
-  echo "build=$latest_build"
+  echo "build=${latest_version##*.}"
 } >> "$GITHUB_OUTPUT"
 
 # export version for the util
