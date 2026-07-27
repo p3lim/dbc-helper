@@ -5,6 +5,7 @@ import sys
 import csv
 import tempfile
 import urllib.request
+import urllib.error
 
 from types import SimpleNamespace
 class CSVReader(csv.DictReader):
@@ -52,7 +53,12 @@ def dbc(file, extra_rows=None):
   # cache file to disk
   url = f'https://wago.tools/db2/{file}/csv?build={os.environ.get("DBC_BUILD")}'
   file = f'{tmp}/{file}.csv'
-  urllib.request.urlretrieve(url, file)
+
+  try:
+    _, res = urllib.request.urlretrieve(url, file)
+  except urllib.error.HTTPError as e:
+    print(f'Failed to download "{file}": {e} (CF-RAY={res["CF-RAY"]})')
+    os.exit(1)
 
   # return it as a CSV object
   return CSVReader(open(file, 'r'), extra_rows)
