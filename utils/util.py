@@ -62,9 +62,10 @@ def dbc(file, extra_rows=None):
   file = f'{tmp}/{file}.csv'
 
   try:
-    _, res = urllib.request.urlretrieve(url, file)
+    urllib.request.urlretrieve(url, file)
   except urllib.error.HTTPError as e:
-    bail(f'Failed to download "{file}": {e} (CF-RAY={res["CF-RAY"]})')
+    cfray = e.headers.get('CF-RAY', '')
+    bail(f'Failed to download "{file}": {e} (CF-RAY={cfray})')
 
   # return it as a CSV object
   return CSVReader(open(file, 'r'), extra_rows)
