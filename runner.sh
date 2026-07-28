@@ -28,12 +28,12 @@ elif test "$INPUT_FLAVOR" != ''; then
 fi
 
 # download builds
-builds="$(curl -sSL 'https://wago.tools/api/builds')"
+builds="$(curl -sSL 'https://wago.tools/api/builds/latest')"
 
 # shorthand for querying builds
 function get_version {
   if jq -e -r --arg product "$1" '.[$product]' <<< "$builds" > /dev/null; then
-    jq -r --arg product "$1" '.[$product] | sort_by(.version | split(".") | map(tonumber)) | last | .version' <<< "$builds"
+    jq -r --arg product "$1" '.[$product].version' <<< "$builds"
   fi
 }
 
