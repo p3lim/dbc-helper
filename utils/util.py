@@ -7,6 +7,12 @@ import tempfile
 import urllib.request
 import urllib.error
 
+
+def bail(*args, **kwargs):
+  print(*args, file=sys.stderr, **kwargs)
+  sys.exit(1)
+
+
 from types import SimpleNamespace
 class CSVReader(csv.DictReader):
   def __init__(self, file, extra_rows=None, *args, **kwargs):
@@ -37,6 +43,7 @@ class CSVReader(csv.DictReader):
     # convert dict to SimpleNamespace so it's nicer to work with
     return SimpleNamespace(**row)
 
+
 # let wago track requests
 opener = urllib.request.build_opener()
 opener.addheaders = [('User-agent', 'actions/dbc-helper')]
@@ -57,16 +64,10 @@ def dbc(file, extra_rows=None):
   try:
     _, res = urllib.request.urlretrieve(url, file)
   except urllib.error.HTTPError as e:
-    print(f'Failed to download "{file}": {e} (CF-RAY={res["CF-RAY"]})')
-    os.exit(1)
+    bail(f'Failed to download "{file}": {e} (CF-RAY={res["CF-RAY"]})')
 
   # return it as a CSV object
   return CSVReader(open(file, 'r'), extra_rows)
-
-
-def bail(*args, **kwargs):
-  print(*args, file=sys.stderr, **kwargs)
-  sys.exit(1)
 
 
 DEFAULT_TEMPLATE = '''
