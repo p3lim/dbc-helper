@@ -37,8 +37,8 @@ function get_version {
   fi
 }
 
-function newer_version {
-  printf '%s\n' "$1" "$2" | sort -C -V
+function is_newer_version {
+  printf '%s\n' "$1" "$2" | sort -C -V -r
 }
 
 # get latest version and build number for product
@@ -48,16 +48,16 @@ latest_version="$(get_version "$product")"
 if [ -n "$INPUT_PTR" ]; then
   if [ "$product" = 'wow' ]; then
     version="$(get_version 'wowt')"
-    if newer_version "${version}" "${latest_version}"; then
+    if is_newer_version "${version}" "${latest_version}"; then
       latest_version="$version"
     fi
     version="$(get_version 'wowxptr')"
-    if newer_version "${version}" "${latest_version}"; then
+    if is_newer_version "${version}" "${latest_version}"; then
       latest_version="$version"
     fi
   else
     version="$(get_version "${product}_ptr")"
-    if newer_version "${version}" "${latest_version}"; then
+    if is_newer_version "${version}" "${latest_version}"; then
       latest_version="$version"
     fi
   fi
@@ -66,7 +66,7 @@ fi
 if [ -n "$INPUT_BETA" ]; then
   if [ "$product" != 'wow_classic_era' ]; then
     version="$(get_version "${product}_beta")"
-    if newer_version "${version}" "${latest_version}"; then
+    if is_newer_version "${version}" "${latest_version}"; then
       latest_version="$version"
     fi
   fi
