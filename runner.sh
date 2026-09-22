@@ -95,6 +95,9 @@ while read -r script output; do
   script="${script%:}"
   script="${script%.py}.py"
 
+  # ensure directory exists first
+  mkdir -p "$(dirname "$output")"
+
   # run script async
   echo "Running '$script' > '$output'"
   python3 "${GITHUB_WORKSPACE}/${script}" > "${GITHUB_WORKSPACE}/${output}" &
