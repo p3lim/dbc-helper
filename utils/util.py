@@ -3,10 +3,11 @@
 import os
 import sys
 import csv
-import tempfile
 import urllib.request
 import urllib.error
+from pathlib import Path
 
+build = os.environ.get('DBC_BUILD')
 
 def bail(*args, **kwargs):
   print(*args, file=sys.stderr, **kwargs)
@@ -53,19 +54,17 @@ def dbc(file, extra_rows=None):
   # it would be highly preferable if we just had access to all of the csv files in a repo
   # just because of this collision crap, also downloading can be slow
 
-  # we'll need to avoid collisions
-  tempfile.tempdir = os.environ.get('RUNNER_TEMP', tempfile.gettempdir())
-  tmp = tempfile.mkdtemp()
-
   # cache file to disk
-  url = f'https://wago.tools/db2/{file}/csv?build={os.environ.get("DBC_BUILD")}'
-  file = f'{tmp}/{file}.csv'
+  file = Path(f'{os.environ.get("RUNNER_TEMP")}/{build}/{file}.csv')
+  file.parent.mkdir(parents=True, exist_ok=True)
 
-  try:
-    urllib.request.urlretrieve(url, file)
-  except urllib.error.HTTPError as e:
-    cfray = e.headers.get('CF-RAY', '')
-    bail(f'Failed to download "{file}": {e} (CF-RAY={cfray})')
+  if not file.is_file():
+    url = f'https://wago.tools/db2/{file}/csv?build={build}'
+    try:
+      urllib.request.urlretrieve(url, file)
+    except urllib.error.HTTPError as e:
+      cfray = e.headers.get('CF-RAY', '')
+      bail(f'Failed to download "{file}": {e} (CF-RAY={cfray})')
 
   # return it as a CSV object
   return CSVReader(open(file, 'r'), extra_rows)
