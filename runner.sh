@@ -12,7 +12,7 @@ fi
 INPUT_FILES="$(sed '/^[[:space:]]*$/d' <<< "$INPUT_FILES")"
 
 product='wow' # the default
-if [[ "${INPUT_FLAVOR,,}" =~ (retail|mainline) ]]; then
+if [[ "${INPUT_FLAVOR,,}" =~ (retail|standard) ]]; then
   product='wow'
 elif [[ "${INPUT_FLAVOR,,}" =~ (forever|camelot) ]]; then
   product='wow_classic_beta' # temp
