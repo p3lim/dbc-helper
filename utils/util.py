@@ -59,16 +59,16 @@ def dbc(file, extra_rows=None):
   # just because of this collision crap, also downloading can be slow
 
   # cache file to disk
-  file = Path(f'{os.environ.get("RUNNER_TEMP")}/{build}/{file}.csv')
-  file.parent.mkdir(parents=True, exist_ok=True)
+  file_path = Path(f'{os.environ.get("RUNNER_TEMP")}/{build}/{file}.csv')
+  file_path.parent.mkdir(parents=True, exist_ok=True)
 
-  if not file.is_file():
+  if not file_path.is_file():
     url = f'https://wago.tools/db2/{file}/csv?build={build}'
     try:
-      urllib.request.urlretrieve(url, file)
+      urllib.request.urlretrieve(url, file_path)
     except urllib.error.HTTPError as e:
       cfray = e.headers.get('CF-RAY', '')
-      bail(f'Failed to download "{file.name}": {e} (CF-RAY={cfray})')
+      bail(f'Failed to download "{file_path.stem}": {e} (CF-RAY={cfray})')
 
   # return it as a CSV object
   return CSVReader(open(file, 'r'), extra_rows)
