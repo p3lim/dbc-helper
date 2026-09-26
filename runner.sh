@@ -2,6 +2,25 @@
 
 set -e
 
+if test "$GITHUB_WORKSPACE" = ''; then
+  RUNNER_TEMP="/tmp/dbc-helper"
+  export RUNNER_TEMP
+  mkdir -p "$RUNNER_TEMP"
+
+  GITHUB_ACTION_PATH="$(dirname "$0")"
+  export GITHUB_ACTION_PATH
+
+  GITHUB_WORKSPACE="$(pwd)"
+  export GITHUB_WORKSPACE
+
+  GITHUB_OUTPUT="$(mktemp)"
+  export GITHUB_OUTPUT
+  trap 'rm -rf -- "$GITHUB_OUTPUT"' EXIT
+
+  # make it a little easier to run locally too
+  INPUT_FILES="$1: $2"
+fi
+
 # check inputs
 if test "$INPUT_FILES" = ''; then
   echo 'no files to process'
