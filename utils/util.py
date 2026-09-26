@@ -2,6 +2,7 @@
 
 import csv
 import os
+import socket
 import sys
 import urllib.error
 import urllib.request
@@ -54,6 +55,9 @@ opener = urllib.request.build_opener()
 opener.addheaders = [('User-agent', 'actions/dbc-helper')]
 urllib.request.install_opener(opener)
 
+# set timeout
+socket.setdefaulttimeout(60)
+
 def dbc(file, extra_rows=None):
   # it would be highly preferable if we just had access to all of the csv files in a repo
   # just because of this collision crap, also downloading can be slow
@@ -69,6 +73,8 @@ def dbc(file, extra_rows=None):
     except urllib.error.HTTPError as e:
       cfray = e.headers.get('CF-RAY', '')
       bail(f'Failed to download "{file_path.stem}": {e} (CF-RAY={cfray})')
+    except urllib.error.URLError as e:
+      bail(f'Failed to download "{file_path.stem}": {e}')
 
   # return it as a CSV object
   return CSVReader(open(file, 'r'), extra_rows)

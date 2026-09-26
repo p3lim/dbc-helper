@@ -57,7 +57,7 @@ fi
 if [ -f "$RUNNER_TEMP/builds" ]; then
   builds="$(cat "$RUNNER_TEMP/builds")"
 else
-  builds="$(curl -sSL 'https://wago.tools/api/builds/latest')"
+  builds="$(curl -sSL --max-time 60 'https://wago.tools/api/builds/latest')"
   echo "$builds" > "$RUNNER_TEMP/builds"
 fi
 
