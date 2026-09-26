@@ -75,6 +75,11 @@ function is_newer_version {
 # get latest version and build number for product
 latest_version="$(get_version "$product")"
 
+if [ -z "$latest_version" ]; then
+    echo "unable to get latest version for '$product'"
+    exit 1
+fi
+
 # go through ptr and beta versions of the product to check if they have a newer build
 if [ "${INPUT_PTR,,}" = 'true' ]; then
   if [ "$product" = 'wow' ]; then
