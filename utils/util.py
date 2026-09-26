@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
+import csv
 import os
 import sys
-import csv
-import urllib.request
 import urllib.error
+import urllib.request
 from pathlib import Path
+from types import SimpleNamespace
 
-flavor = os.environ.get('INPUT_FLAVOR')
 build = os.environ.get('DBC_BUILD')
+flavor = os.environ.get('INPUT_FLAVOR')
 
 def log(*args, **kwargs):
   print(*args, file=sys.stderr, **kwargs)
