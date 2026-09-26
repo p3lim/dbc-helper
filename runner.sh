@@ -109,7 +109,7 @@ fi
 export DBC_BUILD="$latest_version"
 echo "DBC $product $latest_version"
 
-# export flavor for the util
+# export flavor for the util with a fallback to retail
 export INPUT_FLAVOR="${INPUT_FLAVOR:-retail}"
 
 # expose our utility "library"
