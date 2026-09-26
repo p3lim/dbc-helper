@@ -10,10 +10,12 @@ from pathlib import Path
 flavor = os.environ.get('INPUT_FLAVOR')
 build = os.environ.get('DBC_BUILD')
 
-def bail(*args, **kwargs):
+def log(*args, **kwargs):
   print(*args, file=sys.stderr, **kwargs)
-  sys.exit(1)
 
+def bail(*args, **kwargs):
+  log(*args, **kwargs)
+  sys.exit(1)
 
 from types import SimpleNamespace
 class CSVReader(csv.DictReader):
