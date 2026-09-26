@@ -48,13 +48,19 @@ def dbc(file, extra_rows=None):
 
   if not file_path.is_file():
     url = f'https://wago.tools/db2/{file}/csv?build={build}'
+    log(f'- Downloading {url} to {file_path}')
+
+    tmp_path = file_path.with_suffix('.csv.part')
     try:
-      urllib.request.urlretrieve(url, file_path)
+      urllib.request.urlretrieve(url, tmp_path)
+      tmp_path.rename(file_path)
     except urllib.error.HTTPError as e:
       cfray = e.headers.get('CF-RAY', '')
       bail(f'Failed to download "{file_path.stem}": {e} (CF-RAY={cfray})')
     except urllib.error.URLError as e:
       bail(f'Failed to download "{file_path.stem}": {e}')
+    finally:
+      tmp_path.unlink(missing_ok=True)
 
   # return rows as a yielder
   def rows():
