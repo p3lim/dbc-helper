@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 
 if test "$GITHUB_WORKSPACE" = ''; then
   RUNNER_TEMP="/tmp/dbc-helper"
