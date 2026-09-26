@@ -34,6 +34,7 @@ INPUT_FILES="$(sed '/^[[:space:]]*$/d' <<< "$INPUT_FILES")"
 INPUT_FLAVOR="${INPUT_FLAVOR:-retail}"
 INPUT_PTR="${INPUT_PTR:-false}"
 INPUT_BETA="${INPUT_BETA:-false}"
+IS_CLASSIC=false
 
 product='wow' # the default
 if [[ "${INPUT_FLAVOR,,}" =~ (retail|standard) ]]; then
@@ -42,12 +43,16 @@ elif [[ "${INPUT_FLAVOR,,}" =~ (forever|camelot) ]]; then
   product='wow_classic_beta' # temp
 elif [[ "${INPUT_FLAVOR,,}" =~ (classic_era|vanilla) ]]; then
   product='wow_classic_era'
+  IS_CLASSIC=true
 elif [[ "${INPUT_FLAVOR,,}" =~ (anniversary|tbc) ]]; then
   product='wow_anniversary'
+  IS_CLASSIC=true
 elif [[ "${INPUT_FLAVOR,,}" =~ (titan|wrath) ]]; then
   product='wow_classic_titan'
+  IS_CLASSIC=true
 elif [[ "${INPUT_FLAVOR,,}" =~ (classic|mists) ]]; then
   product='wow_classic'
+  IS_CLASSIC=true
 elif test "$INPUT_FLAVOR" != ''; then
   echo "invalid flavor '$INPUT_FLAVOR'"
   exit 1
@@ -121,6 +126,7 @@ echo "DBC $product $latest_version"
 
 # export flavor and classic for the util
 export INPUT_FLAVOR
+export IS_CLASSIC
 
 # expose our utility "library"
 export PYTHONPATH="${GITHUB_ACTION_PATH}/utils:${PYTHONPATH}"

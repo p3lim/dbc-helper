@@ -11,6 +11,7 @@ from types import SimpleNamespace
 
 build = os.environ.get('DBC_BUILD')
 flavor = os.environ.get('INPUT_FLAVOR')
+classic = os.environ.get('IS_CLASSIC', 'false') == 'true'
 
 def log(*args, **kwargs):
   print(*args, file=sys.stderr, **kwargs)
