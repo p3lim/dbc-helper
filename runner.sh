@@ -30,6 +30,11 @@ fi
 # strip empty lines
 INPUT_FILES="$(sed '/^[[:space:]]*$/d' <<< "$INPUT_FILES")"
 
+# set defaults
+INPUT_FLAVOR="${INPUT_FLAVOR:-retail}"
+INPUT_PTR="${INPUT_PTR:-false}"
+INPUT_BETA="${INPUT_BETA:-false}"
+
 product='wow' # the default
 if [[ "${INPUT_FLAVOR,,}" =~ (retail|standard) ]]; then
   product='wow'
@@ -71,7 +76,7 @@ function is_newer_version {
 latest_version="$(get_version "$product")"
 
 # go through ptr and beta versions of the product to check if they have a newer build
-if [ -n "${INPUT_PTR:-}" ]; then
+if [ "${INPUT_PTR,,}" = 'true' ]; then
   if [ "$product" = 'wow' ]; then
     version="$(get_version 'wowt')"
     if is_newer_version "${version}" "${latest_version}"; then
@@ -89,7 +94,7 @@ if [ -n "${INPUT_PTR:-}" ]; then
   fi
 fi
 
-if [ -n "${INPUT_BETA:-}" ]; then
+if [ "${INPUT_BETA,,}" = 'true' ]; then
   if [ "$product" != 'wow_classic_era' ]; then
     version="$(get_version "${product}_beta")"
     if is_newer_version "${version}" "${latest_version}"; then
@@ -109,8 +114,8 @@ fi
 export DBC_BUILD="$latest_version"
 echo "DBC $product $latest_version"
 
-# export flavor for the util with a fallback to retail
-export INPUT_FLAVOR="${INPUT_FLAVOR:-retail}"
+# export flavor and classic for the util
+export INPUT_FLAVOR
 
 # expose our utility "library"
 export PYTHONPATH="${GITHUB_ACTION_PATH}/utils:${PYTHONPATH}"
