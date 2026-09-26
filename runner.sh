@@ -90,6 +90,9 @@ fi
 export DBC_BUILD="$latest_version"
 echo "DBC $product $latest_version"
 
+# export flavor for the util
+export INPUT_FLAVOR="${INPUT_FLAVOR:-retail}"
+
 # expose our utility "library"
 export PYTHONPATH="${GITHUB_ACTION_PATH}/utils:${PYTHONPATH}"
 

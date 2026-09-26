@@ -7,6 +7,7 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
+flavor = os.environ.get('INPUT_FLAVOR')
 build = os.environ.get('DBC_BUILD')
 
 def bail(*args, **kwargs):
