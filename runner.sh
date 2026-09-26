@@ -30,7 +30,12 @@ elif test "$INPUT_FLAVOR" != ''; then
 fi
 
 # download builds
-builds="$(curl -sSL 'https://wago.tools/api/builds/latest')"
+if [ -f "$RUNNER_TEMP/builds" ]; then
+  builds="$(cat "$RUNNER_TEMP/builds")"
+else
+  builds="$(curl -sSL 'https://wago.tools/api/builds/latest')"
+  echo "$builds" > "$RUNNER_TEMP/builds"
+fi
 
 # shorthand for querying builds
 function get_version {
