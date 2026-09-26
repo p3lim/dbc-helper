@@ -25,7 +25,7 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           title: Update license
-          body:
+          body: ""
           commit-message: Update license
           branch: update-license
           delete-branch: true
