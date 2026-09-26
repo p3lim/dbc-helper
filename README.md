@@ -33,7 +33,8 @@ There will probably never be any tags, so if you prefer stability you should pin
 
 Options:
 - `flavor` - sets the game version to scrape data from, must be one of:
-  - `retail` (aliases: `mainline`)
+  - `retail` (aliases: `standard`)
+  - `forever` (aliases: `camelot`)
   - `mists` (aliases: `classic`)
   - `wrath` (aliases: `titan`)
   - `tbc` (aliases: `anniversary`)
