@@ -28,6 +28,9 @@ urllib.request.install_opener(opener)
 # set timeout
 socket.setdefaulttimeout(60)
 
+# itemsparse can be massive
+csv.field_size_limit(10_000_000)
+
 def _coerce_row(row):
   # coerce rows into SimpleNamespace for easier lookups
   coerced = {}
