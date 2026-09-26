@@ -13,6 +13,7 @@ inputs:
     description: Include PTR versions?
   files:
     description: Script file and output file pairs
+    required: true
 outputs:
   flavor:
     description: Flavor from input
