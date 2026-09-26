@@ -145,5 +145,5 @@ done <<< "${INPUT_FILES}"
 
 # wait for all scripts to finish
 for pid in "${pids[@]}"; do
-  wait "$pid" || exit
+  wait "$pid" || exit 1
 done
