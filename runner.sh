@@ -129,7 +129,7 @@ export INPUT_FLAVOR
 export IS_CLASSIC
 
 # expose our utility "library"
-export PYTHONPATH="${GITHUB_ACTION_PATH}/utils:${PYTHONPATH}"
+export PYTHONPATH="${GITHUB_ACTION_PATH}/utils:${PYTHONPATH:-}"
 
 # loop over input mapping
 pids=()
