@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-if test "$GITHUB_WORKSPACE" = ''; then
+if test "${GITHUB_WORKSPACE:-}" = ''; then
   RUNNER_TEMP="/tmp/dbc-helper"
   export RUNNER_TEMP
   mkdir -p "$RUNNER_TEMP"
@@ -71,7 +71,7 @@ function is_newer_version {
 latest_version="$(get_version "$product")"
 
 # go through ptr and beta versions of the product to check if they have a newer build
-if [ -n "$INPUT_PTR" ]; then
+if [ -n "${INPUT_PTR:-}" ]; then
   if [ "$product" = 'wow' ]; then
     version="$(get_version 'wowt')"
     if is_newer_version "${version}" "${latest_version}"; then
@@ -89,7 +89,7 @@ if [ -n "$INPUT_PTR" ]; then
   fi
 fi
 
-if [ -n "$INPUT_BETA" ]; then
+if [ -n "${INPUT_BETA:-}" ]; then
   if [ "$product" != 'wow_classic_era' ]; then
     version="$(get_version "${product}_beta")"
     if is_newer_version "${version}" "${latest_version}"; then
