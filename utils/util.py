@@ -50,7 +50,7 @@ def dbc(file, extra_rows=None):
     url = f'https://wago.tools/db2/{file}/csv?build={build}'
     log(f'- Downloading {url} to {file_path}')
 
-    tmp_path = file_path.with_suffix('.csv.part')
+    tmp_path = file_path.with_suffix(f'.csv.{os.getpid()}.part')
     try:
       urllib.request.urlretrieve(url, tmp_path)
       tmp_path.rename(file_path)
