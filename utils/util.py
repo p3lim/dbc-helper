@@ -79,7 +79,6 @@ def dbc(file, extra_rows=None):
 HEADER_TEMPLATE = '''
 -- this file is auto-generated
 {}
-
 '''
 OBJECT_TEMPLATE = '''
 {} = {{
@@ -90,8 +89,8 @@ OBJECT_TEMPLATE = '''
 def templateLuaTable(prefix=None, objectName=None, objectFormat=None, data=None):
   output = ''
   if prefix:
-    output = output + HEADER_TEMPLATE.format(prefix)
+    output = output + HEADER_TEMPLATE.format(prefix).strip()
   if objectName:
     lines = [objectFormat.format(**data[item]) for item in sorted(data)]
-    output = output + OBJECT_TEMPLATE.format(objectName, '\n'.join(lines))
+    output = output + OBJECT_TEMPLATE.format(objectName, '\n'.join(lines)).strip()
   print(output.strip())
