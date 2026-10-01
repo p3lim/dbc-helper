@@ -76,14 +76,22 @@ def dbc(file, extra_rows=None):
   return rows()
 
 
-DEFAULT_TEMPLATE = '''
+HEADER_TEMPLATE = '''
 -- this file is auto-generated
 {}
+
+'''
+OBJECT_TEMPLATE = '''
 {} = {{
 {}
 }}
 '''
 
-def templateLuaTable(prefix, objectName, objectFormat, data):
-  lines = [objectFormat.format(**data[item]) for item in sorted(data)]
-  print(DEFAULT_TEMPLATE.format(prefix, objectName, '\n'.join(lines)).strip())
+def templateLuaTable(prefix=None, objectName=None, objectFormat=None, data=None):
+  output = ''
+  if prefix:
+    output = output + HEADER_TEMPLATE.format(prefix)
+  if objectName:
+    lines = [objectFormat.format(**data[item]) for item in sorted(data)]
+    output = output + OBJECT_TEMPLATE.format(objectName, '\n'.join(lines))
+  print(output.strip())
