@@ -87,10 +87,10 @@ OBJECT_TEMPLATE = '''
 '''
 
 def templateLuaTable(prefix=None, objectName=None, objectFormat=None, data=None):
-  output = ''
+  output = []
   if prefix:
-    output = output + HEADER_TEMPLATE.format(prefix).strip()
+    output.append(HEADER_TEMPLATE.format(prefix).strip())
   if objectName:
     lines = [objectFormat.format(**data[item]) for item in sorted(data)]
-    output = output + OBJECT_TEMPLATE.format(objectName, '\n'.join(lines)).strip()
-  print(output.strip())
+    output.append(OBJECT_TEMPLATE.format(objectName, '\n'.join(lines)).strip())
+  print('\n'.join(output))
